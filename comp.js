@@ -10,24 +10,11 @@ const onProductHover = (e) => {
     tippy.hideAll();
 
     const productLink = e.target.parentElement;
-    const loaded = e.target.parentElement.dataset.loaded;
+    const loaded = productLink.dataset.loaded;
 
-    if (loaded) {
-        return
-    }
+    if (loaded) return;
 
-    const loadingDiv = document.createElement('div');
-    loadingDiv.class = 'slideshow';
-    loadingDiv.innerHTML = '<div class="loading">Loading...</div>';
-
-    const tooltip = new tippy(productLink, {
-      content: loadingDiv,
-      allowHTML: true,
-      interactive: true,
-      maxWidth: '100%',
-    });
-
-    tooltip.show();
+    const productTooltip = new ProductTooltip(productLink)
 
     fetch(productLink.href).then(function (response) {
         if (response.ok) {
@@ -35,11 +22,15 @@ const onProductHover = (e) => {
         }
         throw response;
     }).then(function (text) {
-        var parser = new DOMParser();
-        var itemPage = parser.parseFromString(text, "text/html");
+        const parser = new DOMParser();
+        const itemPage = parser.parseFromString(text, "text/html");
         const productPageSlideshow = itemPage.querySelector('.slideshow');
 
-        new ProductSlideShow(productPageSlideshow, tooltip);
-        e.target.parentElement.dataset.loaded = true;
+        const productSlideShow = new ProductSlideShow(productPageSlideshow);
+        productSlideShow.init({ tooltip: productTooltip });
+
+        if (productSlideShow.slideshow.innerElements.length > 1) {
+            productLink.dataset.loaded = true;
+        }
     });
 }
