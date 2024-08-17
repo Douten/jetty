@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Jetpens Comp",
+    "version": "0.1",
+  
+    "description": "Companion extension for shopping at Jetpens",
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*.jetpens.com/*"],
+        "js": ["comp.js", "popper.js", "tippy.js", "siema.js", "slideshow.js"],
+        "css": ["comp.css"]
+      }
+    ]
+  }
+  
