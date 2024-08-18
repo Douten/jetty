@@ -12,6 +12,7 @@ class ProductTooltip {
     });
 
     this.tooltip.show();
+    this.tooltipContainer = this.tooltip.popper.querySelector('.tippy-content');
     this.addProduct(productLinkElement.href);
   }
 
@@ -26,13 +27,30 @@ class ProductTooltip {
         this.productPage = parser.parseFromString(text, "text/html");
 
         this.addSlideShow();
+        this.addReviews();
     });
   }
 
   addSlideShow() {
-    const slideshow = new ProductSlideShow(this.productPage.querySelector('.slideshow'));
+    if (!this.productPage?.querySelector('.slideshow')) return;
+    
+    const slideshow = new ProductSlideShow(this.productPage
+      .querySelector('.slideshow'));
     slideshow.init({ tooltip: this.tooltip });
 
     this.slideshow = slideshow.slideshow;
+  }
+
+  addReviews() {
+    if (!this.productPage?.querySelectorAll('.review-container').length) return;
+
+    const reviewContainer = document.createElement('div');
+    reviewContainer.classList.add('review-container');
+
+    const reviews = this.productPage
+      .querySelectorAll('.review-container > div:first-child');
+    reviews.forEach(review => review.className = '');
+    reviewContainer.append(...reviews);
+    this.tooltip.popper.querySelector('.tippy-content').append(reviewContainer);
   }
 }

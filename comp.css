@@ -1,5 +1,5 @@
 .slideshow {
-    width: 600px;
+    width: 500px;
     height: 425px;
 
     img {
@@ -20,4 +20,8 @@
 
 .tippy-content {
     padding: 20px;
+    max-width: 600px;
+    min-height: 200px;
+    max-height: 40vh;
+    overflow: scroll;
 }
