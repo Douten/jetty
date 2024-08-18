@@ -1,3 +1,13 @@
+.loading {
+  .loader {
+    display: block;
+  }
+
+  .container {
+    display: none;
+  }
+}
+
 .slideshow {
     width: 500px;
     height: 425px;

@@ -1,25 +1,39 @@
 class ProductTooltip {
   constructor(productLinkElement) {
-    const loadingDiv = document.createElement('div');
-    loadingDiv.class = 'slideshow';
-    loadingDiv.innerHTML = '<div class="loading">Loading...</div>';
+    this.productLinkElement = productLinkElement;
+  }
 
-    this.tooltip = new tippy(productLinkElement, {
-      content: loadingDiv,
+  async init() {
+    await this.renderTooltip();
+    this.tooltip.show();
+    this.addProduct();
+  }
+
+  async renderTooltip() {
+    // Create Tooltip Template, including loading state
+    const template = new Template('product-tooltip');
+    await template.init();
+
+    this.tooltip = new tippy(this.productLinkElement, {
+      content: template.node,
       allowHTML: true,
       interactive: true,
       maxWidth: '100%',
     });
 
-    this.tooltip.show();
-    this.tooltipContainer = this.tooltip.popper.querySelector('.tippy-content');
-    this.addProduct(productLinkElement.href);
+    // containers to insert product components
+    this.tooltip.containers = {
+      wrapper: this.tooltip.popper.querySelector('.product-tooltip-wrapper'),
+      gallery: this.tooltip.popper.querySelector('.gallery.container'),
+      spec: this.tooltip.popper.querySelector('.spec.container'),
+      review: this.tooltip.popper.querySelector('.review.container'),
+    }
   }
 
-  async addProduct(productLinkElement) {
-    await this.renderProductTemplate();
+  async addProduct() {
+    this.tooltip.containers.wrapper.classList.add('loading');
 
-    fetch(productLinkElement).then((response) => {
+    fetch(this.productLinkElement.href).then((response) => {
         if (response.ok) {
             return response.text();
         }
@@ -27,27 +41,15 @@ class ProductTooltip {
     }).then((text) => {
         const parser = new DOMParser();
         this.productPage = parser.parseFromString(text, "text/html");
+        this.tooltip.containers.wrapper.classList.remove('loading');
 
         this.addSlideShow();
         this.addReviews();
     });
   }
 
-  async renderProductTemplate() {
-    const template = new Template('product-tooltip');
-    await template.init();
-    console.log({ template });
-    this.tooltip.setContent(template.node);
-    console.log({ popper: this.tooltip.popper });
-    this.tooltip.containers = {
-      gallery: this.tooltip.popper.querySelector('.gallery.container'),
-      spec: this.tooltip.popper.querySelector('.spec.container'),
-      review: this.tooltip.popper.querySelector('.review.container'),
-    }
-  }
-
   addSlideShow() {
-    const slideshowImages = this.productPage?.querySelectorAll('.slideshow li')
+    const slideshowImages = this.productPage?.querySelectorAll('.slideshow li img')
     if (!slideshowImages) return;
     
     const slideshow = new ProductSlideShow(slideshowImages);

@@ -4,7 +4,7 @@ TEMPLATE_LIST = [
 
 class Template {
   constructor(name) {
-    if (TEMPLATE_LIST.includes(name)) {
+    if (!TEMPLATE_LIST.includes(name)) {
       throw new Error(`Template name ${name} not found`);
     }
     

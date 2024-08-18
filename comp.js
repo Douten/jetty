@@ -11,5 +11,6 @@ const onProductHover = (e) => {
     // Exit if tooltip is already initialized
     if (productLinkElement.getAttribute('aria-expanded')) return;
     
-    new ProductTooltip(productLinkElement)
+    const productTooltip = new ProductTooltip(productLinkElement);
+    productTooltip.init();
 }
