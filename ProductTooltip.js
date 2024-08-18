@@ -1,10 +1,10 @@
 class ProductTooltip {
-  constructor(productLink) {
+  constructor(productLinkElement) {
     const loadingDiv = document.createElement('div');
     loadingDiv.class = 'slideshow';
     loadingDiv.innerHTML = '<div class="loading">Loading...</div>';
 
-    this.tooltip = new tippy(productLink, {
+    this.tooltip = new tippy(productLinkElement, {
       content: loadingDiv,
       allowHTML: true,
       interactive: true,
@@ -12,10 +12,27 @@ class ProductTooltip {
     });
 
     this.tooltip.show();
+    this.addProduct(productLinkElement.href);
   }
 
-  addSlideShow(productPageSlideshow) {
-    this.slideshow = new ProductSlideShow(productPageSlideshow);
-    this.slideshow.init({ tooltip: this.tooltip });
+  async addProduct(productLinkElement) {
+    fetch(productLinkElement).then((response) => {
+        if (response.ok) {
+            return response.text();
+        }
+        throw response;
+    }).then((text) => {
+        const parser = new DOMParser();
+        this.productPage = parser.parseFromString(text, "text/html");
+
+        this.addSlideShow();
+    });
+  }
+
+  addSlideShow() {
+    const slideshow = new ProductSlideShow(this.productPage.querySelector('.slideshow'));
+    slideshow.init({ tooltip: this.tooltip });
+
+    this.slideshow = slideshow.slideshow;
   }
 }
