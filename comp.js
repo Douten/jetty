@@ -26,10 +26,9 @@ const onProductHover = (e) => {
         const itemPage = parser.parseFromString(text, "text/html");
         const productPageSlideshow = itemPage.querySelector('.slideshow');
 
-        const productSlideShow = new ProductSlideShow(productPageSlideshow);
-        productSlideShow.init({ tooltip: productTooltip });
+        productTooltip.addSlideShow(productPageSlideshow);
 
-        if (productSlideShow.slideshow.innerElements.length > 1) {
+        if (productTooltip.slideshow.innerElements.length > 1) {
             productLink.dataset.loaded = true;
         }
     });

@@ -4,16 +4,18 @@ class ProductTooltip {
     loadingDiv.class = 'slideshow';
     loadingDiv.innerHTML = '<div class="loading">Loading...</div>';
 
-    const tooltip = new tippy(productLink, {
+    this.tooltip = new tippy(productLink, {
       content: loadingDiv,
       allowHTML: true,
       interactive: true,
       maxWidth: '100%',
     });
 
-    tooltip.show();
-
-    return tooltip;
+    this.tooltip.show();
   }
 
+  addSlideShow(productPageSlideshow) {
+    this.slideshow = new ProductSlideShow(productPageSlideshow);
+    this.slideshow.init({ tooltip: this.tooltip });
+  }
 }

@@ -2,6 +2,7 @@ class ProductSlideShow {
   constructor(productPageSlideshow) {
     this.productPageSlideshow = productPageSlideshow;
     this.initContainer();
+    return this.slideshow;
   }
 
   init({ tooltip }) {
