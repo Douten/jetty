@@ -34,6 +34,7 @@ class ProductTooltip {
     this.tooltip.containers.wrapper.classList.add('loading');
 
     fetch(this.productLinkElement.href).then((response) => {
+        this.tooltip.containers.wrapper.classList.remove('loading');
         if (response.ok) {
             return response.text();
         }
@@ -41,7 +42,6 @@ class ProductTooltip {
     }).then((text) => {
         const parser = new DOMParser();
         this.productPage = parser.parseFromString(text, "text/html");
-        this.tooltip.containers.wrapper.classList.remove('loading');
 
         this.addSlideShow();
         this.addReviews();

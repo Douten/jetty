@@ -8,14 +8,14 @@
     "content_scripts": [
       {
         "matches": ["*://*.jetpens.com/*"],
-        "js": [ "popper.js",
-          "tippy.js",
-          "siema.js",
-          "ProductSlideShow.js",
-          "ProductTooltip.js",
-          "Template.js",
-          "comp.js" ],
-        "css": ["comp.css"]
+        "js": [ "dist/popper.js",
+          "dist/tippy.js",
+          "dist/siema.js",
+          "js/ProductSlideShow.js",
+          "js/ProductTooltip.js",
+          "js/Template.js",
+          "jetty.js" ],
+        "css": ["jetty.css"]
       }
     ],
 
