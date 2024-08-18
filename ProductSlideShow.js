@@ -1,52 +1,25 @@
 class ProductSlideShow {
-  constructor(productPageSlideshow) {
-    this.productPageSlideshow = productPageSlideshow;
-    this.initContainer();
+  constructor(slideshowImages) {
+    this.slideshowImages = slideshowImages;
     return this.slideshow;
   }
 
-  init({ tooltip }) {
-    if (tooltip) {
-      tooltip.setContent(this.container);
+  init({ container }) {
+    if (container) {
+      console.log('ProductSlideShow', { container, images: this.slideshowImages });
+      const slideshowEl = container.querySelector('.siema');
+      slideshowEl.append(...this.slideshowImages);
 
-      this.productPageSlideshow.classList.add('siema');
       const slideshow = new Siema({
-        selector: this.productPageSlideshow,
+        selector: slideshowEl,
         draggable: true,
         loop: true,
       });
 
-      this.nextBtn.addEventListener('click', () => slideshow.next());
-      this.prevBtn.addEventListener('click', () => slideshow.prev());
+      container.querySelector('button.next').addEventListener('click', () => slideshow.next());
+      container.querySelector('button.prev').addEventListener('click', () => slideshow.prev());
 
       this.slideshow = slideshow;
     }
-  }
-
-  initContainer() {
-    if (this.container && this.nextBtn && this.prevBtn) return;
-
-    const { container, nextBtn, prevBtn } = this.createSlideShowControls();
-    container.append(this.productPageSlideshow, prevBtn, nextBtn);
-
-    this.container = container;
-    this.nextBtn = nextBtn;
-    this.prevBtn = prevBtn;
-  }
-
-  createSlideShowControls() {
-    if (this.container && this.nextBtn && this.prevBtn) return;
-    
-    const slideshowContainer = document.createElement('div');
-    slideshowContainer.classList.add('slideshow-container');
-
-    const nextBtn = document.createElement('button');
-    nextBtn.classList.add('next');
-    nextBtn.innerHTML = 'Next';
-    const prevBtn = document.createElement('button');
-    prevBtn.classList.add('prev');
-    prevBtn.innerHTML = 'Prev';
-
-    return { container: slideshowContainer, nextBtn, prevBtn }
   }
 }

@@ -13,8 +13,16 @@
           "siema.js",
           "ProductSlideShow.js",
           "ProductTooltip.js",
+          "Template.js",
           "comp.js" ],
         "css": ["comp.css"]
+      }
+    ],
+
+    "web_accessible_resources": [
+      {
+        "resources": ["templates/*.html"],
+        "matches": ["*://*.jetpens.com/*"]
       }
     ]
   }

@@ -17,6 +17,8 @@ class ProductTooltip {
   }
 
   async addProduct(productLinkElement) {
+    await this.renderProductTemplate();
+
     fetch(productLinkElement).then((response) => {
         if (response.ok) {
             return response.text();
@@ -31,26 +33,32 @@ class ProductTooltip {
     });
   }
 
-  addSlideShow() {
-    if (!this.productPage?.querySelector('.slideshow')) return;
-    
-    const slideshow = new ProductSlideShow(this.productPage
-      .querySelector('.slideshow'));
-    slideshow.init({ tooltip: this.tooltip });
+  async renderProductTemplate() {
+    const template = new Template('product-tooltip');
+    await template.init();
+    console.log({ template });
+    this.tooltip.setContent(template.node);
+    console.log({ popper: this.tooltip.popper });
+    this.tooltip.containers = {
+      gallery: this.tooltip.popper.querySelector('.gallery.container'),
+      spec: this.tooltip.popper.querySelector('.spec.container'),
+      review: this.tooltip.popper.querySelector('.review.container'),
+    }
+  }
 
-    this.slideshow = slideshow.slideshow;
+  addSlideShow() {
+    const slideshowImages = this.productPage?.querySelectorAll('.slideshow li')
+    if (!slideshowImages) return;
+    
+    const slideshow = new ProductSlideShow(slideshowImages);
+    slideshow.init({ container: this.tooltip.containers.gallery });
   }
 
   addReviews() {
-    if (!this.productPage?.querySelectorAll('.review-container').length) return;
+    const reviews = this.productPage?.querySelectorAll('.review-container > div:first-child');
+    if (!reviews.length) return;
 
-    const reviewContainer = document.createElement('div');
-    reviewContainer.classList.add('review-container');
-
-    const reviews = this.productPage
-      .querySelectorAll('.review-container > div:first-child');
     reviews.forEach(review => review.className = '');
-    reviewContainer.append(...reviews);
-    this.tooltip.popper.querySelector('.tippy-content').append(reviewContainer);
+    this.tooltip.containers.review.append(...reviews);
   }
 }
