@@ -17,8 +17,14 @@ class ProductTooltip {
     this.tooltip = new tippy(this.productLinkElement, {
       content: template.node,
       allowHTML: true,
+      placement: 'bottom',
       interactive: true,
+      appendTo: this.productLinkElement.closest('.product')
+        .querySelector('div:last-child'),
       maxWidth: '100%',
+      offset: [0, -220],
+      delay: [600, 100],
+      arrow: false,
     });
 
     // containers to insert product components

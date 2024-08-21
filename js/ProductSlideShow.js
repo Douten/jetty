@@ -6,7 +6,6 @@ class ProductSlideShow {
 
   init({ container }) {
     if (container) {
-      console.log('ProductSlideShow', { container, images: this.slideshowImages });
       const slideshowEl = container.querySelector('.siema');
       slideshowEl.append(...this.slideshowImages);
 

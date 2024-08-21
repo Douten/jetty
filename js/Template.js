@@ -31,8 +31,6 @@ class Template {
         .documentElement.querySelector('template').content.cloneNode(true);
     }
 
-    console.log({ templateNode });
-
     return templateNode;
   }
 }
