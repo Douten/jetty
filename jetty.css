@@ -33,7 +33,6 @@
   width: 660px;
   min-height: 440px;
   max-height: 40vh;
-  border-radius: 2px;
   border: var(--border);
   border-bottom-width: 4px;
   display: flex;
@@ -45,6 +44,7 @@
   width: 100%;
   overflow: scroll;
   height: 432px;
+  scrollbar-width: none;
 
   .loader {
     display: none;
@@ -74,7 +74,7 @@
   font-variant-caps: small-caps;
   height: 30px;
   padding: 0 10px;
-  border-radius: 2px;
+  border-radius: 1px;
 }
 
 .slideshow {
@@ -90,7 +90,9 @@
 
 .loading {
   .gallery {
-    display: none;
+    .prev, .next {
+      display: none;
+    }
   }
   .spec {
     display: none;

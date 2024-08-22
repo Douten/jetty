@@ -5,12 +5,11 @@ class ProductTooltip {
 
   async init() {
     await this.renderTooltip();
-    this.tooltip.show();
-    this.addProduct();
   }
 
   async renderTooltip() {
     // Create Tooltip Template, including loading state
+    this.loaded = false
     const template = new Template('product-tooltip');
     await template.init();
 
@@ -23,8 +22,13 @@ class ProductTooltip {
         .querySelector('div:last-child'),
       maxWidth: '100%',
       offset: [0, -220],
-      delay: [600, 100],
+      delay: [750, 100],
       arrow: false,
+      onShow: () => {
+        if (!this.loaded) {
+          this.addProduct();
+        }
+      }
     });
 
     // containers to insert product components
@@ -40,7 +44,6 @@ class ProductTooltip {
     this.tooltip.containers.wrapper.classList.add('loading');
 
     fetch(this.productLinkElement.href).then((response) => {
-        this.tooltip.containers.wrapper.classList.remove('loading');
         if (response.ok) {
             return response.text();
         }
@@ -48,7 +51,8 @@ class ProductTooltip {
     }).then((text) => {
         const parser = new DOMParser();
         this.productPage = parser.parseFromString(text, "text/html");
-
+        
+        this.loaded = true;
         this.addSlideShow();
         this.addReviews();
     });
@@ -60,6 +64,8 @@ class ProductTooltip {
     
     const slideshow = new ProductSlideShow(slideshowImages);
     slideshow.init({ container: this.tooltip.containers.gallery });
+    // update to remove when each section is loaded
+    this.tooltip.containers.wrapper.classList.remove('loading');
   }
 
   addReviews() {
