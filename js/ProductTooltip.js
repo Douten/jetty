@@ -26,10 +26,20 @@ class ProductTooltip {
       offset: [0, -220],
       placement: 'bottom',
       onShow: () => {
+        window.addEventListener('keyup', (e) => {
+          // unable to limit to this instance and have it hide right away
+          if (e.key === 'Escape') tippy.hideAll();
+        });
+
         if (!this.loaded) {
           this.addProduct();
           this.tooltip.containers.wrapper.classList.remove('loading');
         }
+      },
+      onHide: () => {
+        window.removeEventListener('keyup', (e) => {
+          if (e.key === 'Escape') tippy.hideAll();
+        });
       }
     });
 
