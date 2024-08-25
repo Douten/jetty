@@ -35,7 +35,7 @@ class ProductTooltip {
     this.tooltip.containers = {
       wrapper: this.tooltip.popper.querySelector('.product-tooltip-wrapper'),
       gallery: this.tooltip.popper.querySelector('.gallery.container'),
-      spec: this.tooltip.popper.querySelector('.spec.container'),
+      description: this.tooltip.popper.querySelector('.description.container'),
       review: this.tooltip.popper.querySelector('.review.container'),
     }
   }
@@ -54,6 +54,7 @@ class ProductTooltip {
         
         this.loaded = true;
         this.addSlideShow();
+        this.addDescription();
         this.addReviews();
     });
   }
@@ -66,6 +67,13 @@ class ProductTooltip {
     slideshow.init({ container: this.tooltip.containers.gallery });
     // update to remove when each section is loaded
     this.tooltip.containers.wrapper.classList.remove('loading');
+  }
+
+  addDescription() {
+    const description = this.productPage?.querySelector('.description');
+    if (!description) return;
+
+    this.tooltip.containers.description.append(description);
   }
 
   addReviews() {
