@@ -4,10 +4,14 @@ class ProductSlideShow {
     return this.slideshow;
   }
 
-  init({ container }) {
+  init({ tooltip }) {
+    const container = tooltip.containers.gallery;
     if (container) {
       const slideshowEl = container.querySelector('.siema');
       slideshowEl.append(...this.slideshowImages);
+
+      tooltip.containers.gallery.classList.remove('d-none');
+      tooltip.popper.querySelector('.gallery.button').classList.remove('d-none');
 
       const slideshow = new Siema({
         selector: slideshowEl,

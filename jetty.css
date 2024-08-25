@@ -26,7 +26,14 @@
   --background-color: white;
 }
 
+button {
+  cursor: pointer;
+}
 
+/* HELPERS */
+.d-none {
+  display: none;
+}
 
 /* MODAL STYLES */
 .tippy-content {
@@ -140,26 +147,18 @@
     .nav {
       display: flex;
       gap: 10px;
-  
-      button {
-        border: 0;
-    
-        &.active {
-          border: var(--border-light);
-        }
-      }
     }
   }
   
   /* GALLERY STYLES */
-  .gallery {
-    margin: 20px auto;
+  .container.gallery {
+    padding: 8px 20px 20px;
     position: relative;
-    width: 600px;
+    
   
     .prev, .next {
       align-items: center;
-      bottom: 0;
+      bottom: -5px;
       display: flex;
       font-size: 16px;
       height: 25px;
@@ -175,17 +174,21 @@
     }
   
     .next {
-      right: 0;
+      right: 20px;
     }
   
     .prev {
-      left: 0;
+      left: 20px;
     }
   }
   
   /* DESCRIPTION STYLES */
-  .description {
-    margin: 0 15px;
+  .container.description {
+    margin: 0 30px;
+
+    h3 {
+      margin: 10px 0;
+    }
   }
   
   /* REVIEW STYLES */

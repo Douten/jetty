@@ -28,6 +28,7 @@ class ProductTooltip {
       onShow: () => {
         if (!this.loaded) {
           this.addProduct();
+          this.tooltip.containers.wrapper.classList.remove('loading');
         }
       }
     });
@@ -35,11 +36,12 @@ class ProductTooltip {
     // containers to insert product components
     this.tooltip.containers = {
       wrapper: this.tooltip.popper.querySelector('.product-tooltip-wrapper'),
+      toolbar: this.tooltip.popper.querySelector('.toolbar'),
       gallery: this.tooltip.popper.querySelector('.gallery.container'),
       description: this.tooltip.popper.querySelector('.description.container'),
       review: this.tooltip.popper.querySelector('.review.container'),
     }
-    
+
     this.tooltip.closeButton = this.tooltip.popper.querySelector('.close.button');
     this.tooltip.closeButton.addEventListener('click', () => this.tooltip.hide());
   }
@@ -68,9 +70,8 @@ class ProductTooltip {
     if (!slideshowImages) return;
     
     const slideshow = new ProductSlideShow(slideshowImages);
-    slideshow.init({ container: this.tooltip.containers.gallery });
-    // update to remove when each section is loaded
-    this.tooltip.containers.wrapper.classList.remove('loading');
+    slideshow.init({ tooltip: this.tooltip });
+    this.enableNavButton('gallery');
   }
 
   addDescription() {
@@ -78,13 +79,32 @@ class ProductTooltip {
     if (!description) return;
 
     this.tooltip.containers.description.append(description);
+    this.tooltip.containers.description.classList.remove('d-none');
+    this.enableNavButton('description');
   }
 
   addReviews() {
     const reviews = this.productPage?.querySelectorAll('.review-container > div:first-child');
     if (!reviews.length) return;
 
+    
     reviews.forEach(review => review.className = '');
     this.tooltip.containers.review.append(...reviews);
+    this.tooltip.containers.review.classList.remove('d-none');
+    this.enableNavButton('review');
+  }
+
+  enableNavButton(name) {
+    const container = this.tooltip.containers;
+    const button = this.tooltip.popper.querySelector(`.${name}.button`);
+
+    console.log('toolbar scrollHeight', container.toolbar.scrollHeight)
+
+    button.addEventListener('click', () => {
+      const scrollTo = container[name].offsetTop - container.toolbar.scrollHeight;
+      container.wrapper.scrollTo({ top: scrollTo, behavior: 'smooth' });
+    });
+
+    button.classList.remove('d-none');
   }
 }
