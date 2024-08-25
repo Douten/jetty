@@ -21,7 +21,7 @@ class ProductTooltip {
       content: template.node,
       delay: [750, 100],
       interactive: true,
-      interactiveBorder: 50,
+      interactiveBorder: 20,
       maxWidth: '100%',
       offset: [0, -220],
       placement: 'bottom',
@@ -33,7 +33,6 @@ class ProductTooltip {
 
         if (!this.loaded) {
           this.addProduct();
-          this.tooltip.containers.wrapper.classList.remove('loading');
         }
       },
       onHide: () => {
@@ -57,8 +56,6 @@ class ProductTooltip {
   }
 
   async addProduct() {
-    this.tooltip.containers.wrapper.classList.add('loading');
-
     fetch(this.productLinkElement.href).then((response) => {
         if (response.ok) {
             return response.text();
@@ -111,7 +108,8 @@ class ProductTooltip {
     console.log('toolbar scrollHeight', container.toolbar.scrollHeight)
 
     button.addEventListener('click', () => {
-      const scrollTo = container[name].offsetTop - container.toolbar.scrollHeight;
+      const scrollTo = container[name].offsetTop
+        - container.toolbar.scrollHeight - 10;
       container.wrapper.scrollTo({ top: scrollTo, behavior: 'smooth' });
     });
 

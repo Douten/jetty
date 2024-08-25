@@ -32,7 +32,7 @@ button {
 
 /* HELPERS */
 .d-none {
-  display: none;
+  display: none !important;
 }
 
 /* MODAL STYLES */
@@ -62,21 +62,27 @@ button {
     overflow: scroll;
     height: 474px;
     scrollbar-width: none;
-  
-    .loader {
-      display: none;
-    }
-    
+  }
+
+  .loader {
+    align-items: center;
+    background-color: var(--background-color);
+    display: flex;
+    font-size: 24px;
+    height: 100%;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: opacity .6s;
+    width: 100%;
+    z-index: 3;
   }
   
   .product-tooltip-wrapper.loading {
     .loader {
-      display: flex;
-      width: 100%;
-      justify-content: center;
-      height: 474px;
-      align-items: center;
-      font-size: 24px;
+      opacity: 1;
     }
   
     .container button{

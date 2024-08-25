@@ -13,6 +13,18 @@ class ProductSlideShow {
       tooltip.containers.gallery.classList.remove('d-none');
       tooltip.popper.querySelector('.gallery.button').classList.remove('d-none');
 
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          console.log('entry', entry);
+          if (entry.target.offsetHeight > 300) {
+            tooltip.containers.wrapper.classList.remove('loading');
+          }
+        }
+      });
+      
+      resizeObserver.observe(slideshowEl);
+      
+
       const slideshow = new Siema({
         selector: slideshowEl,
         draggable: true,
@@ -32,6 +44,8 @@ class ProductSlideShow {
         clearTimeout(this.slideshowTimer);
         this.slideshowTimer = setInterval(() => slideshow.next(), 4500)
       });
+      container.querySelector('button.next').classList.remove('d-none');
+      container.querySelector('button.prev').classList.remove('d-none');
 
       this.slideshow = slideshow;
     }
