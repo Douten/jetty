@@ -14,16 +14,17 @@ class ProductTooltip {
     await template.init();
 
     this.tooltip = new tippy(this.productLinkElement, {
-      content: template.node,
       allowHTML: true,
-      placement: 'bottom',
-      interactive: true,
       appendTo: this.productLinkElement.closest('.product')
         .querySelector('div:last-child'),
+      arrow: false,
+      content: template.node,
+      delay: [750, 100],
+      interactive: true,
+      interactiveBorder: 50,
       maxWidth: '100%',
       offset: [0, -220],
-      delay: [750, 100],
-      arrow: false,
+      placement: 'bottom',
       onShow: () => {
         if (!this.loaded) {
           this.addProduct();
@@ -38,6 +39,9 @@ class ProductTooltip {
       description: this.tooltip.popper.querySelector('.description.container'),
       review: this.tooltip.popper.querySelector('.review.container'),
     }
+    
+    this.tooltip.closeButton = this.tooltip.popper.querySelector('.close.button');
+    this.tooltip.closeButton.addEventListener('click', () => this.tooltip.hide());
   }
 
   async addProduct() {

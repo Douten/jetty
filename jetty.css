@@ -133,7 +133,7 @@
     z-index: 2;
     
     button {
-      font-size: 10px;
+      font-size: 12px;
       height: 24px;
     }
   
@@ -158,9 +158,16 @@
     width: 600px;
   
     .prev, .next {
-      position: absolute;
-      width: 80px;
+      align-items: center;
       bottom: 0;
+      display: flex;
+      font-size: 16px;
+      height: 25px;
+      justify-content: center;
+      line-height: 0;
+      padding: 0;
+      position: absolute;
+      width: 25px;
   
       &:hover {
         backdrop-filter: blur(3px);

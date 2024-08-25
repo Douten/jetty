@@ -13,10 +13,21 @@ class ProductSlideShow {
         selector: slideshowEl,
         draggable: true,
         loop: true,
+        duration: 550,
       });
 
-      container.querySelector('button.next').addEventListener('click', () => slideshow.next());
-      container.querySelector('button.prev').addEventListener('click', () => slideshow.prev());
+      this.slideshowTimer = setInterval(() => slideshow.next(), 4500)
+
+      container.querySelector('button.next').addEventListener('click', () => { 
+        slideshow.next();
+        clearTimeout(this.slideshowTimer);
+        this.slideshowTimer = setInterval(() => slideshow.next(), 4500)
+      });
+      container.querySelector('button.prev').addEventListener('click', () => {
+        slideshow.prev();
+        clearTimeout(this.slideshowTimer);
+        this.slideshowTimer = setInterval(() => slideshow.next(), 4500)
+      });
 
       this.slideshow = slideshow;
     }
