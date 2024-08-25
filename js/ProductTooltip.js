@@ -19,13 +19,14 @@ class ProductTooltip {
         .querySelector('div:last-child'),
       arrow: false,
       content: template.node,
-      delay: [750, 100],
+      delay: [1000, 500],
       interactive: true,
-      interactiveBorder: 20,
+      interactiveBorder: 50,
       maxWidth: '100%',
       offset: [0, -220],
       placement: 'bottom',
-      onShow: () => {
+      onShow: (instance) => {
+        tippy.hideAll({ exclude: instance });
         window.addEventListener('keyup', (e) => {
           // unable to limit to this instance and have it hide right away
           if (e.key === 'Escape') tippy.hideAll();
@@ -104,8 +105,6 @@ class ProductTooltip {
   enableNavButton(name) {
     const container = this.tooltip.containers;
     const button = this.tooltip.popper.querySelector(`.${name}.button`);
-
-    console.log('toolbar scrollHeight', container.toolbar.scrollHeight)
 
     button.addEventListener('click', () => {
       const scrollTo = container[name].offsetTop

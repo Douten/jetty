@@ -15,7 +15,6 @@ class ProductSlideShow {
 
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          console.log('entry', entry);
           if (entry.target.offsetHeight > 300) {
             tooltip.containers.wrapper.classList.remove('loading');
           }
