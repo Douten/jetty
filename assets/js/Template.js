@@ -17,7 +17,7 @@ class Template {
   }
 
   async getTemplate(name) {
-    const templateFileUrl = browser.runtime.getURL(`templates/${name}.html`);
+    const templateFileUrl = browser.runtime.getURL(`assets/templates/${name}.html`);
     const response = await fetch(templateFileUrl);
 
     let templateNode = null;

@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Jetpens Comp",
+    "name": "Jetty",
     "version": "0.1",
   
     "description": "Companion extension for shopping at Jetpens",
@@ -8,20 +8,20 @@
     "content_scripts": [
       {
         "matches": ["*://*.jetpens.com/*"],
-        "js": [ "dist/popper.js",
-          "dist/tippy.js",
-          "dist/siema.js",
-          "js/ProductSlideShow.js",
-          "js/ProductTooltip.js",
-          "js/Template.js",
-          "jetty.js" ],
-        "css": ["jetty.css"]
+        "js": [ "assets/library/popper.js",
+          "assets/library/tippy.js",
+          "assets/library/siema.js",
+          "assets/js/ProductSlideShow.js",
+          "assets/js/ProductTooltip.js",
+          "assets/js/Template.js",
+          "assets/jetty.js" ],
+        "css": ["assets/jetty.css"]
       }
     ],
 
     "web_accessible_resources": [
       {
-        "resources": ["templates/*.html"],
+        "resources": ["assets/templates/*.html"],
         "matches": ["*://*.jetpens.com/*"]
       }
     ]

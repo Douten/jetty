@@ -1,6 +1,10 @@
 class ProductTooltip {
   constructor(productLinkElement) {
     this.productLinkElement = productLinkElement;
+    this.addToCartBtn = productLinkElement.closest('.product')
+      .querySelector('.add-to-cart') || productLinkElement.closest('.product')
+      .querySelector('.button-secondary') 
+    this.addToCartBtn = this.addToCartBtn.cloneNode(true);
   }
 
   async init() {
@@ -22,6 +26,7 @@ class ProductTooltip {
       delay: [1000, 500],
       interactive: true,
       interactiveBorder: 50,
+      trigger: 'manual',
       maxWidth: '100%',
       offset: [0, -220],
       placement: 'bottom',
@@ -54,6 +59,8 @@ class ProductTooltip {
 
     this.tooltip.closeButton = this.tooltip.popper.querySelector('.close.button');
     this.tooltip.closeButton.addEventListener('click', () => this.tooltip.hide());
+    this.addToCartBtn.addEventListener('click', () => this.tooltip.hide());
+    this.tooltip.containers.toolbar.querySelector('.action').append(this.addToCartBtn);
   }
 
   async addProduct() {

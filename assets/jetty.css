@@ -90,7 +90,7 @@ button {
     }
   }
   
-  .button {
+  .button, .pure-button {
     font: var(--font-standard);
     border: var(--border-light);
     font-variant-caps: small-caps;
@@ -102,7 +102,17 @@ button {
       border-bottom-width: 2px;
     }
   }
-  
+
+  .pure-button {
+    align-items: center;
+    display: flex;
+
+    &:hover {
+      background-color: var(--yellow);
+      background-image: none;
+    }
+  }
+
   .slideshow {
     max-height: 400px;
     margin: auto;
@@ -145,12 +155,12 @@ button {
     top: 0;
     z-index: 2;
     
-    button {
+    button, .pure-button {
       font-size: 12px;
       height: 24px;
     }
   
-    .nav {
+    div {
       display: flex;
       gap: 10px;
     }
