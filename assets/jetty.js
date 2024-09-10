@@ -1,4 +1,4 @@
-const productImgs = document.querySelectorAll('div.product img')
+const productImgs = document.querySelectorAll('.products div.product img')
 // add on hover listener to each product div
 productImgs.forEach(productImg => {
     const productLinkElement = productImg.parentElement;    
